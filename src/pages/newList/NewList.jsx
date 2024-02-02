@@ -72,8 +72,6 @@ export default function NewProduct() {
           {movies.map((movie) => (
             <option key ={movie._id} value={movie._id}>{movie.title}</option>
           ))}
-          
-          
          </select>
         </div>
         </div>
