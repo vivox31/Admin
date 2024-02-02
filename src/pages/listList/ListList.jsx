@@ -1,47 +1,43 @@
-import "./productList.css";
+import "./listList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { productRows } from "../../dummyData";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { MovieContext } from "../../context/movieContext/MovieContext";
-import { deleteMovies, getMovies } from "../../context/movieContext/apiCalls";
-import {navigation} from "react"
+import { ListContext } from "../../context/listContext/ListContext";
+import { deleteList, getLists } from "../../context/listContext/apiCalls";
+
 
 export default function ProductList() {
-  const [data, setData] = useState(productRows);
 
-  const {movies,dispatch}  = useContext(MovieContext);
+  const {lists,dispatch}  = useContext(ListContext);
   useEffect(()=>{
-    getMovies(dispatch);
-    console.log(movies);
+     getLists(dispatch);
+    console.log(lists);
   },[dispatch])
 
 
 
   const handleDelete = (id) => {
-   deleteMovies(id,dispatch)
+   deleteList(id,dispatch);
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 90 },
+    { field: "_id", headerName: "ID", width: 250 },
     {
-      field: "movies",
-      headerName: "Movies",
-      width: 200,
+      field: "Title",
+      headerName: "Title",
+      width: 250,
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
             {params.row.title}
           </div>
         );
       },
     },
     { field: "genre", headerName: "Genre", width: 120 },
-    { field: "year", headerName: "year", width: 120 },
-    { field: "limit", headerName: "limit", width: 120 },
-    { field: "isSeries", headerName: "isSeries", width: 120 },
+
+    { field: "type", headerName: "isSeries", width: 120 },
 
 
   
@@ -52,7 +48,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <>
-          <Link to={{pathname:"/product/" + params.row._id, state:{data:params.row}}}>
+          <Link to={{pathname:"/list/" + params.row._id, state:{data:params.row}}}>
               <button className="productListEdit">Edit</button>
             </Link>
             <DeleteOutline
@@ -68,7 +64,7 @@ export default function ProductList() {
   return (
     <div className="productList">
       <DataGrid
-        rows={movies}
+        rows={lists}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}
