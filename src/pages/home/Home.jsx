@@ -28,7 +28,7 @@ const [userStats, setUserStats] = useState([]);
   
     const getStats = async ()=>{
       try{
-      const res = await axios.get('http://localhost:8800/api/user/stats',{
+      const res = await axios.get('https://netflix-1ibe.onrender.com/api/user/stats',{
         headers : 
           {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken}
         

@@ -4,7 +4,7 @@ export const getMovies = async(dispatch)=>{
     dispatch(getMovieStart);
 
     try{
-        const res = await axios.get("http://localhost:8800/api/movie/", {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+        const res = await axios.get("https://netflix-1ibe.onrender.com/api/movie/", {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         //    console.log("res"+res.data);
@@ -18,7 +18,7 @@ export const deleteMovies = async(id,dispatch)=>{
     dispatch(deleteMovieStart());
 
     try{
-         await axios.delete("http://localhost:8800/api/movie/"+id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+         await axios.delete("https://netflix-1ibe.onrender.com/api/movie/"+id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         
@@ -32,7 +32,7 @@ export const CreateMovie = async(movie,dispatch)=>{
     dispatch(createMovieStart());
 
     try{
-        const res = await axios.post("http://localhost:8800/api/movie",movie, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+        const res = await axios.post("https://netflix-1ibe.onrender.com/api/movie",movie, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         
@@ -47,7 +47,7 @@ export const updateMovie= async(movie,dispatch)=>{
     dispatch(updateMovieStart());
 
     try{
-         const res = await axios.put("http://localhost:8800/api/movie/"+movie._id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+         const res = await axios.put("https://netflix-1ibe.onrender.com/api/movie/"+movie._id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         

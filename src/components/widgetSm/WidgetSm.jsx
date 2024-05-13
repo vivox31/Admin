@@ -8,7 +8,7 @@ export default function WidgetSm() {
   useEffect(()=>{
     const getNewUsers = async()=>{
         try {
-          const res =  await axios.get('http://localhost:8800/api/user/?new=true', {
+          const res =  await axios.get('https://netflix-1ibe.onrender.com/api/user/?new=true', {
             headers : 
           {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken}
         });

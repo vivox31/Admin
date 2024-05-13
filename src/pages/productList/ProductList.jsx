@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { MovieContext } from "../../context/movieContext/MovieContext";
 import { deleteMovies, getMovies } from "../../context/movieContext/apiCalls";
-import {navigation} from "react"
+import { getStorage, ref,deleteObject } from "firebase/storage";
 
 export default function ProductList() {
-  const [data, setData] = useState(productRows);
 
   const {movies,dispatch}  = useContext(MovieContext);
   useEffect(()=>{
@@ -18,9 +17,43 @@ export default function ProductList() {
   },[dispatch])
 
 
+ const deleteFromFirebase = (data)=>{
+  const firebaseStorageUrl = data
 
-  const handleDelete = (id) => {
-   deleteMovies(id,dispatch)
+// Decode the URL-encoded path
+const decodedPath = decodeURIComponent(firebaseStorageUrl.split("%2F")[1]);
+
+// Extract the file name
+const fileName = decodedPath.split("?")[0];
+
+// console.log("File Name:", fileName);
+  
+  const storage = getStorage();
+   const filetodelete = ref(storage, `items/${fileName}`);
+
+   deleteObject(filetodelete).then(()=>{
+    console.log(fileName,"deleted successfully");
+   }).catch((err)=>{
+    console.log(err);
+   })
+
+
+
+  
+  console.log("File Name:", fileName);
+ }
+  const handleDelete = (movie) => {
+    
+
+    // here i am delete all the visual files of the movie from firebase storage
+    deleteFromFirebase(movie.img);
+    deleteFromFirebase(movie.imgSm);
+    deleteFromFirebase(movie.imgTitle);
+    deleteFromFirebase(movie.trailer);
+    deleteFromFirebase(movie.video);
+    /////////////////////////////////////////////////////////
+
+   deleteMovies(movie._id,dispatch)
   };
 
   const columns = [
@@ -57,7 +90,7 @@ export default function ProductList() {
             </Link>
             <DeleteOutline
               className="productListDelete"
-              onClick={() => handleDelete(params.row._id)}
+              onClick={() => handleDelete(params.row)}
             />
           </>
         );

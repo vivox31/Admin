@@ -9,6 +9,14 @@
     flex-wrap: wrap;
 }
 
+.progressbar{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 23;
+  width: 50px;
+  
+}
 
 .addProductItem {
   width: 250px;

@@ -6,7 +6,7 @@ export const getLists = async(dispatch)=>{
     dispatch(getListsStart());
 
     try{
-        const res = await axios.get("http://localhost:8800/api/list/", {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+        const res = await axios.get("https://netflix-1ibe.onrender.com/api/list/", {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         //    console.log("res"+res.data);
@@ -20,7 +20,7 @@ export const deleteList = async(id,dispatch)=>{
     dispatch(deleteListStart());
 
     try{
-         await axios.delete("http://localhost:8800/api/list/"+id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+         await axios.delete("https://netflix-1ibe.onrender.com/api/list/"+id, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         
@@ -34,7 +34,7 @@ export const CreateList = async(list,dispatch)=>{
     dispatch(createListStart());
 
     try{
-        const res = await axios.post("http://localhost:8800/api/list",list, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+        const res = await axios.post("https://netflix-1ibe.onrender.com/api/list",list, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         
@@ -50,7 +50,7 @@ export const updateList = async(id, body, dispatch)=>{
     dispatch(updateListStart());
 
     try{
-        const res =  await axios.put("http://localhost:8800/api/list/"+id,body, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
+        const res =  await axios.put("https://netflix-1ibe.onrender.com/api/list/"+id,body, {headers : {token : "bearer " + JSON.parse(localStorage.getItem('user')).accesstoken},
                             
           });
         

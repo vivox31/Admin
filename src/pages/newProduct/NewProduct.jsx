@@ -4,9 +4,13 @@ import storage from "../../firebase";
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { CreateMovie } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/MovieContext";
+import { CircularProgress } from "@material-ui/core";
+
+
 
 export default function NewProduct() {
   const [movie, setMovie] = useState(null)
+  
   const [img, setImg] = useState(null)
   const [imgTitle, setImgTitle] = useState(null)
   const [imgSm, setImgSm] = useState(null)
@@ -22,20 +26,19 @@ export default function NewProduct() {
         setMovie({...movie,[e.target.name]: value})
         
   }
-  // array.forEach(element => {
-    
-  // });
+  const [progress, setProgress] = useState(100)
 const upload = (items)=>{
 
   items.forEach(item => {
-     
+    
         // code for uploading files to firebase storage refer to- documentation
         const filename = new Date().getTime() + item.label + item.file.name
       const storageRef = ref(storage,`/items/${filename}`);
     const uploadTask =  uploadBytesResumable(storageRef,item.file);
     uploadTask.on('state_changed', (snapshot)=>{
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
       console.log('Upload is ' + progress + '% done');
+      
     },(error)=>{
         console.log(error);
     },
@@ -53,6 +56,7 @@ const upload = (items)=>{
   });
 
 });
+
 }
   const handleUpload = (e)=>{
     e.preventDefault();
@@ -65,6 +69,7 @@ const upload = (items)=>{
       {file: video , label:"video"},
 
     ])
+   
   }
 
   const handleSubmit = async (e)=>{
@@ -112,8 +117,13 @@ const upload = (items)=>{
         </div>
 
         <div className="addProductItem">
+          <label>year </label>
+          <input type="text" id="year"  placeholder="2002" name='year'onChange={handleOnChange}/>
+        </div>
+
+        <div className="addProductItem">
           <label>Duration</label>
-          <input type="text" id="duration" placeholder="Duration" onChange={handleOnChange}/>
+          <input type="text" id="duration" placeholder="Duration"  name="duration"onChange={handleOnChange}/>
         </div>
 
         <div className="addProductItem">
@@ -142,8 +152,9 @@ const upload = (items)=>{
         (<button className="addProductButton" onClick={handleSubmit}>Create</button>):
        (<button className="addProductButton" onClick={handleUpload}>Upload</button>)
         }
-        
       </form>
+      <CircularProgress variant="determinate" className="progressbar" value={(progress != 100) ? progress:0} />
+
     </div>
   );
 }
